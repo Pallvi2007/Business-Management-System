@@ -137,13 +137,13 @@ Business-Management-System
 
 # Key Features:-
 
-✔ Role-Based Dashboards  
-✔ Task Monitoring System  
-✔ Real-Time Updates  
-✔ Automated Payroll  
-✔ Action History Logs  
-✔ Calendar Integration  
-✔ Intelligent Business Insights  
+- Role-Based Dashboards  
+-Task Monitoring System  
+-Real-Time Updates  
+-Automated Payroll  
+-Action History Logs  
+-Calendar Integration  
+-Intelligent Business Insights  
 
 # Future Improvements:-
 
