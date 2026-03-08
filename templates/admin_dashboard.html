@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>Dashboard</title>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+
+<body>
+
+<h1>Business Management Dashboard</h1>
+
+<h3>Total Employees: {{ employees }}</h3>
+<h3>Total Sales: {{ sales }}</h3>
+<h3>Total Revenue: {{ revenue }}</h3>
+
+<canvas id="salesChart" width="400" height="200"></canvas>
+
+<script>
+
+const ctx = document.getElementById('salesChart');
+
+new Chart(ctx, {
+type: 'bar',
+
+data: {
+labels: ['Employees', 'Sales'],
+
+datasets: [{
+label: 'System Statistics',
+data: [{{ employees }}, {{ sales }}],
+}]
+}
+
+});
+
+</script>
+
+</body>
+</html>
