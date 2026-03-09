@@ -9,4 +9,4 @@ class User(AbstractUser):
         ('MANAGER','Manager'),
     )
 
-    role = models.CharField(max_length=20, choices=ROLE_CHOICES)
+    role = models.CharField(max_length=50, choices=ROLE_CHOICES)

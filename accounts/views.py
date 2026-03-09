@@ -1,21 +1,17 @@
-from django.contrib.auth import authenticate, login
-from django.shortcuts import render, redirect
+from django.contrib.auth import authenticate,login,logout
+from django.shortcuts import render,redirect
 
 def login_view(request):
 
     if request.method == "POST":
+
         username = request.POST['username']
         password = request.POST['password']
 
-        user = authenticate(request, username=username, password=password)
+        user = authenticate(request,username=username,password=password)
 
-        if user is not None:
-            login(request, user)
+        if user:
+            login(request,user)
+            return redirect('dashboard')
 
-            if user.role == "ADMIN":
-                return redirect("admin_dashboard")
-
-            elif user.role == "EMPLOYEE":
-                return redirect("employee_dashboard")
-
-    return render(request, "login.html")
+    return render(request,'accounts/login.html')
