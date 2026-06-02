@@ -52,8 +52,21 @@ function Kanban({ user, onLogout }) {
   };
 
   const handleStatusChange = async (taskId, newStatus) => {
+    // Find the task name before updating to log it accurately
+    const targetedTask = tasks.find(t => t._id === taskId);
+
     // Optimistically update local task row position to keep the UI perfectly snap-responsive
     setTasks(prevTasks => prevTasks.map(t => t._id === taskId ? { ...t, status: newStatus } : t));
+
+    // 🚀 OPTIMISTIC BLACK BOX TRACKING: Catch status shifts instantly on screen
+    const liveMoveLog = {
+      _id: "local_log_" + Date.now(),
+      timestamp: new Date().toISOString(),
+      action: "STATUS_UPDATED",
+      performedBy: user?.username || "pallvi",
+      details: `Transitioned status of "${targetedTask?.title || 'Objective'}" to [${newStatus}].`
+    };
+    setLogs(prevLogs => [liveMoveLog, ...prevLogs]);
 
     try {
       await axios.put(`http://localhost:5000/api/tasks/${taskId}`, {
@@ -82,6 +95,16 @@ function Kanban({ user, onLogout }) {
 
     // 2. Force it onto the UI state array immediately so you SEE it instantly
     setTasks(prevTasks => [...prevTasks, localNewTask]);
+
+    // 🚀 OPTIMISTIC BLACK BOX TRACKING: Log the item creation event immediately
+    const liveCreateLog = {
+      _id: "local_log_" + Date.now(),
+      timestamp: new Date().toISOString(),
+      action: "TASK_CREATED",
+      performedBy: user?.username || "pallvi",
+      details: `Deployed system module object objective: "${localNewTask.title}".`
+    };
+    setLogs(prevLogs => [liveCreateLog, ...prevLogs]);
     
     // 3. Clear your fields and close your popup right away
     setNewTitle('');
